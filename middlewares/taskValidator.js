@@ -1,5 +1,5 @@
 const commonValidation = (title, description, priority, dueDate, status) => {
-    const errors = [];
+    var errors = [];
 
     const validPriorities = ['high', 'medium', 'low'];
     if(priority && !validPriorities.includes(priority)){
@@ -8,14 +8,14 @@ const commonValidation = (title, description, priority, dueDate, status) => {
 
     if(dueDate) {
         const dueDateObj = new Date(dueDate);
-        if(insNaN(dueDateObj.getTime())){
+        if(isNaN(dueDateObj.getTime())){
             errors.push('dueDate must be valid format (YYYY-MM-DD)');
         }
     }
 
-    const validStatuses = ['not-started', 'in-progress', 'done'];
+    const validStatuses = ['not-started', 'in-progress', 'done', 'completed'];
     if (status && !validStatuses.includes(status)){
-        errors.push("status must be 'not-started', 'in-progress', 'done'");
+        errors.push("status must be 'not-started', 'in-progress', 'done'. 'completed'");
     }
 
     return errors;
@@ -23,7 +23,7 @@ const commonValidation = (title, description, priority, dueDate, status) => {
 
 const validatePostTask = (req, res, next) => {
     const { title, description, priority, dueDate, status } = req.body;
-    const errors = [];
+    var errors = [];
 
     errors = commonValidation(title, description, priority, dueDate, status);
 
@@ -44,7 +44,7 @@ const validatePostTask = (req, res, next) => {
 
 const validatePutTask = (req, res, next) => {
     const { title, description, priority, dueDate, status } = req.body;
-    const errors = [];
+    var errors = [];
 
     errors = commonValidation(title, description, priority, dueDate, status);
 

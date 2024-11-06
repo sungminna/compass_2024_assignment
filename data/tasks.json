@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "pjId": 1,
+    "id": "2",
+    "title": "태스크 제목2",
+    "description": "태스크 설명2",
+    "priority": "high",
+    "dueDate": "2024-11-10",
+    "status": "not-started"
+  }
+]

@@ -32,7 +32,7 @@ const store = {
     }, 
 
     async saveProjects(project) {
-        await fs.writeFile(PROJECT_FILE, JSON.stringify(projects, null, 2));
+        await fs.writeFile(PROJECT_FILE, JSON.stringify(project, null, 2));
     }, 
 
     async saveTasks(tasks) {

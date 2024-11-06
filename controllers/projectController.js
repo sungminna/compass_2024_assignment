@@ -34,8 +34,12 @@ const projecetController = {
     async getProjectById(req, res){
         try {
             const { projectId } = req.params;
-            const projects = await store.getProject();
+            const projects = await store.getProjects();
             const tasks = await store.getTasks();
+
+            if (!projectId){
+                return res.status(404).json({ error: "projectId is missing" })
+            }
 
             const project = projects.find(p => p.id === projectId);
             if (!project) {
@@ -46,7 +50,7 @@ const projecetController = {
             res.json({ ...project, tasks: projectTasks });
         }
         catch (err) {
-            res.status(500).json({ error: "failed to fetch project: "  + projectId.toString() })
+            res.status(500).json({ error: "failed to fetch project" })
         }
     }, 
 
@@ -57,6 +61,10 @@ const projecetController = {
             const projects = await store.getProjects();
             const tasks = await store.getTasks();
             
+            if (!projectId){
+                return res.status(404).json({ error: "projectId is missing" })
+            }
+
             const project = projects.find(p => p.id === projectId);
             if (!project) {
                 return res.status(404).json({error: "project is missing: " + projectId.toString()})
@@ -75,7 +83,7 @@ const projecetController = {
             res.json({ message: "project deletion success" });
         }
         catch (error) {
-            res.status(500).json({ error: "failed to delete project: " + projectId.toString() });
+            res.status(500).json({ error: "failed to delete project" });
         }
     }, 
 }

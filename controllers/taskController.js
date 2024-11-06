@@ -8,6 +8,9 @@ const taskController = {
             
             const projects = await store.getProjects();
             const tasks = await store.getTasks();
+            if (!projectId){
+                return res.status(404).json({ error: "projectId is missing" })
+            }
             
             const project = projects.find(p => p.id === projectId);
             if (!project) {
@@ -37,9 +40,13 @@ const taskController = {
     async getProjectTasks(req, res) {
         try {
             const { projectId } = req.params;
-            const projects = await store.getProject();
+            const projects = await store.getProjects();
             const tasks = await store.getTasks();
 
+            if (!projectId){
+                return res.status(404).json({ error: "projectId is missing" })
+            }
+            console.log(projects);
             const project = projects.find(p => p.id === projectId);
             if (!project) {
                 return res.status(404).json({ error: "project is missing: " + projectId.toString() })
@@ -58,8 +65,15 @@ const taskController = {
             const { projectId, taskId } = req.params;
             const updateData = req.body;
 
-            const projects = await store.getProject();
+            const projects = await store.getProjects();
             const tasks = await store.getTasks();
+
+            if (!projectId){
+                return res.status(404).json({ error: "projectId is missing" })
+            }
+            if (!taskId){
+                return res.status(404).json({ error: "taskId is missing" })
+            }
 
             const project = projects.find(p => p.id === projectId);
             if (!project) {
@@ -78,7 +92,7 @@ const taskController = {
             res.json(tasks[taskIndex]);
         }
         catch (error) {
-            res.status(500).json({ error: "failed to update task: " + taskId.toString() });
+            res.status(500).json({ error: "failed to update task" });
         }
     },
     
@@ -87,6 +101,13 @@ const taskController = {
             const { projectId, taskId } = req.params;
             const tasks = await store.getTasks();
             
+            if (!projectId){
+                return res.status(404).json({ error: "projectId is missing" })
+            }
+            if (!taskId){
+                return res.status(404).json({ error: "taskId is missing" })
+            }
+
             const updatedTasks = tasks.filter(
             t => !(t.id === taskId && t.pjId.toString() === projectId)
             );
@@ -95,7 +116,7 @@ const taskController = {
             res.json({ message: "task deletion success" });
         }
         catch (error) {
-            res.status(500).json({ error: "falied to delete task: " + taskId.toString() });
+            res.status(500).json({ error: "falied to delete task" });
         }
     }
     };
