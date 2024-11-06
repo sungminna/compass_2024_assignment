@@ -38,4 +38,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// router
+const projectsRouter = require('./routes/projects');
+app.use('/projects', projectsRouter);
+
 module.exports = app;
